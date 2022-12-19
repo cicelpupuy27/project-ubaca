@@ -1,0 +1,71 @@
+.modalBackground{
+    min-height: 100vh;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.p-modalContainer{
+    background: white;
+    width: 400px;
+    height: 500px;
+    padding: 1.5rem;
+    position: fixed;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    font-size: 15px;
+    text-align: center;
+}
+
+
+.modalImage img{
+    width: 100px;
+}
+
+.buttonRead img{
+    width: 80px;
+}
+
+.close{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    outline: none;
+    border: none;
+    font-size: 17px;
+    background-color: transparent;
+}
+
+.p-body{
+    /* margin: 50px 0px 50px 0px; */
+    font-size: small;
+    padding: 35px 0px 5px 0px;
+}
+
+.p-body h1{
+    margin-bottom: 50px;
+}
+.p-body h5{
+    margin-top: 50px;
+}
+
+.p-buttonRead button{
+    outline: none;
+    border: none;
+    background-color: #3EB489;
+    border-radius: 35px;
+    width: 240px;
+    color: white;
+    width: 120px;
+    height: 30px;
+    margin-top: 25px;
+}
+
