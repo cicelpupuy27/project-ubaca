@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
   return (
-    <nav className="">
-      <p></p>
+    <nav className="nav-l">
       <a href="#" className="logo">
         <img src={logo2} alt="" />
       </a>
