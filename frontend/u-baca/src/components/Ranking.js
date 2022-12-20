@@ -22,7 +22,7 @@ function Ranking({ rank }) {
             >
               <img src={item.avatar} alt="" />
               <div className="rank-desc">
-                <p className="fw-bold">1</p>
+                <p className="fw-bold">{item.id}</p>
               </div>
               <div className="bottom">
                 <button className="pt-3 fw-bold user-name">{item.name}</button>
