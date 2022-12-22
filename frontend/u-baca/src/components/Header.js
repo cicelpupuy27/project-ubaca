@@ -60,7 +60,7 @@ function Header() {
         </div>
       </div>
 
-      <h2 className="info"> Top Reader </h2>
+      <h2 className="info"> Top Readers </h2>
 
       <div className="rank-container">
         <Ranking rank={rankData} />
