@@ -1,15 +1,32 @@
 import React from "react";
 import logo2 from "../assets/logo_ubacaa.png";
 import menu from "../assets/bars-solid.svg";
+import axios from 'axios';
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-import { FaWindows } from "react-icons/fa";
 
 function Navbar() {
   //const navigate = useNavigate();
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = "/";
+
+  const token = localStorage.getItem('token')
+  const logout = (e) => {
+    e.preventDefault();
+     axios
+      .post(`https://admin.u-baca.my.id/api/auth/logout`,{},{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((res) => {
+        localStorage.clear();
+        window.location.href = "/";
+      })
+      .catch((e) => {
+        console.log(e)
+      });
+
   };
 
   return (
