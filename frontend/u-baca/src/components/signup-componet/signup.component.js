@@ -5,6 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 
 function SignUp() {
   const navigate = useNavigate();
+  const [validation, setValidation] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -12,16 +14,17 @@ function SignUp() {
     nama: "",
     tgl_lahir: "",
     jenis_kelamin: "",
-    point: 0,
   });
 
   function registration(e) {
     e.preventDefault();
     if (data.password === data.confirm_pass) {
-      delete data.confirm_pass;
+      // delete data.confirm_pass;
+      setLoader(true)
       axios
-        .post(`https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/users`, data)
+        .post(`https://admin.u-baca.my.id/api/auth/register`, data)
         .then((res) => {
+          setLoader(false)
           console.log(res);
           setData({
             email: "",
@@ -34,15 +37,25 @@ function SignUp() {
           navigate("/sign-in");
         })
         .catch((e) => {
+          setLoader(false)
           console.log(e);
+          setValidation(e.response.data);
         });
-    } else {
-      alert("Password tidak sesuai");
-    }
+      } else {
+        alert("Password tidak sesuai");
+      }
   }
 
   return (
-    <>
+    <>{
+      loader?(
+        <div class="position-fixed bg-dark w-100 h-100 bg-opacity-25">
+            <div class="position-relative position-absolute top-50 start-50 translate-middle">
+              <div class="spinner-border text-primary"  role="status"></div>
+            </div>
+        </div>
+      ) :(<div></div>)
+      }
       <div className="container kotak">
         <div className="row">
           <div className="col-12 ps-1 pt-2">
@@ -51,7 +64,6 @@ function SignUp() {
             </Link>
           </div>
         </div>
-
         <div className="row d-flex pt-4 justify-content-center">
           <div className="col-9">
             <form className="formlogin Buat Akun" method="post" onSubmit={registration}>
@@ -62,10 +74,11 @@ function SignUp() {
                     setData({ ...data, email: e.target.value });
                   }}
                   type="email"
-                  className="mail text-black"
+                  className="mail text-black mb-2"
                   placeholder="Email"
                   value={data.email}
                 />
+                  {validation.email && (<span class="alert alert-danger p-1">{validation.email[0]}</span>)}
               </div>
               <div className="mb-4">
                 <input
@@ -73,10 +86,11 @@ function SignUp() {
                     setData({ ...data, password: e.target.value });
                   }}
                   type="password"
-                  className="password text-black"
+                  className="password text-black mb-2"
                   placeholder="Password"
                   value={data.password}
                 />
+                {validation.password && (<span class="alert alert-danger p-1">{validation.password[0]}</span>)}
               </div>
               <div className="mb-4">
                 <input
@@ -84,7 +98,7 @@ function SignUp() {
                     setData({ ...data, confirm_pass: e.target.value });
                   }}
                   type="password"
-                  className="password text-black"
+                  className="password text-black mb-2"
                   placeholder="Konfimasi Password"
                   value={data.confirm_pass}
                 />
@@ -95,10 +109,11 @@ function SignUp() {
                     setData({ ...data, nama: e.target.value });
                   }}
                   type="nama lengkap"
-                  className="user text-black"
+                  className="user text-black mb-2"
                   placeholder="Nama Lengkap"
                   value={data.nama}
                 />
+                {validation.nama && (<span class="alert alert-danger p-1">{validation.nama[0]}</span>)}
               </div>
               <div className="mb-4">
                 <input
@@ -106,10 +121,11 @@ function SignUp() {
                     setData({ ...data, tgl_lahir: e.target.value });
                   }}
                   type="date"
-                  className="date text-black"
+                  className="date text-black mb-2"
                   placeholder="Tanggal Lahir"
                   value={data.tgl_lahir}
                 />
+                {validation.tgl_lahir && (<span class="alert alert-danger p-1">{validation.tgl_lahir[0]}</span>)}
               </div>
               <div className="mb-4">
                 <input
@@ -117,10 +133,11 @@ function SignUp() {
                     setData({ ...data, jenis_kelamin: e.target.value });
                   }}
                   type="jenis kelamin"
-                  className="gender jenis kelamin text-black"
+                  className="gender jenis kelamin text-black mb-2"
                   placeholder="Jenis Kelamin"
                   value={data.jenis_kelamin}
                 />
+                {validation.jenis_kelamin && (<span class="alert alert-danger p-1">{validation.jenis_kelamin[0]}</span>)}
               </div>
 
               <div className="d-flex justify-content-end align-items-center mb-4">

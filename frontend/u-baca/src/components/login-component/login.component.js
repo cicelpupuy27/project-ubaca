@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -13,35 +14,43 @@ function Login() {
 
   function masuk(e) {
     e.preventDefault();
+    setLoader(true)
     axios
-      .get(`https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/users`)
+      .post(`https://admin.u-baca.my.id/api/auth/login`,data)
       .then((res) => {
+        setLoader(false)
         let result = null;
-        result = res.data.find((item) => {
-          if (item.email == data.email && item.password == data.password) {
-            return item;
-          }
-        });
+        result = res.data
 
-        if (result) {
+        if (result.success) {
           setData({
             email: "",
             password: "",
           });
-          localStorage.setItem("profil", JSON.stringify(result));
-          localStorage.setItem("token", `token-${result.id}`);
+          localStorage.setItem("profil", JSON.stringify(result.data));
+          localStorage.setItem("token", result.token);
           navigate("/");
         } else {
-          alert("akun tidak terdaftar");
+          alert("Email atau Password anda salah");
         }
       })
       .catch((e) => {
-        console.log(e);
+        setLoader(false)
+        alert("Email atau Password anda salah");
       });
   }
 
   return (
     <>
+    {
+      loader?(
+        <div class="position-fixed bg-dark w-100 h-100 bg-opacity-25">
+            <div class="position-relative position-absolute top-50 start-50 translate-middle">
+              <div class="spinner-border text-primary"  role="status"></div>
+            </div>
+        </div>
+      ) :(<div></div>)
+      }
       <div className="container kotak">
         <div className="row">
           <div className="col-12 ps-1 pt-2">
