@@ -17,7 +17,7 @@ export function RandomQuote() {
 
     return(
         <section>
-        {loading && <div>Loading...</div>}
+        {loading && <div class="spinner-border text-primary"  role="status"></div>}
         <div className="container">
                 <div className="row align-item-center" style={{ width: "360" }}>
                     <div className="col-auto pr-5">

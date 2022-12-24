@@ -4,7 +4,9 @@ import Category from "./Category";
 import { RandomQuote } from "./RandomQuote";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FaSearch } from 'react-icons/fa';
 import Ranking from "./Ranking";
+import landingImg from "../assets/landing1.png";
 
 function Header() {
   const [bookData, setBookData] = useState([]);
@@ -33,49 +35,57 @@ function Header() {
   }
   return (
     <div id="main">
+      <div className="container pt-5">
+        <div className="row d-flex mt-5 justify-content-lg-between justify-content-center">
+        <div className="col-lg-6 col-12 d-flex justify-content-center justify-content-lg-start">
+          <h1>Kasih Tulisan apa kek yang asik hehehe sama tambahin button dibawahnya</h1>
+        </div>
+        <div className="col-lg-6 col-12 d-flex justify-content-lg-end justify-content-center">
+          <img src={landingImg} />
+        </div>
+      </div>
+      </div>
       {/* quote section */}
       <section className="pt-4 quote">
         <RandomQuote />
       </section>
-
+ 
       {/* searchbar */}
-      <div className="container search">
-        <div className="d-flex justify-content-center">
+      <div className="container search mt-3">
           <div className="searchbar">
-            <form className="form-inline md-form mr-auto mb-4" onSubmit={onSearch}>
+            <form className="form-src d-flex justify-content-center col-12 mb-4" onSubmit={onSearch}>
+              <div className="col-6">
               <input
-                className="search_input "
+                className=" form-control"
                 type="text"
                 name=""
-                placeholder="CARI BUKU"
+                placeholder="Cari Buku"
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                 }}
               />
-              <button className="btn btn-outline-warning btn-rounded btn-sm my-0" id="src-button" type="submit">
-                Search
+              </div>
+              <button className="btn btn-success rounded-circle" id="src-button" type="submit">
+                <FaSearch/>
               </button>
             </form>
-          </div>
         </div>
       </div>
-
-      <h2 className="info"> Top Readers </h2>
-
-      <div className="rank-container">
-        <Ranking rank={rankData} />
-      </div>
-
       <h2 className="info"> Newly Added Books </h2>
 
       <div className="card-container">
         <Card book={bookData} />
       </div>
+    <h2 className="info mt-3"> Top Readers </h2>
+      <div className="rank-container">
+        <Ranking rank={rankData} />
+      </div>
 
-      <div className="ctg">
+        {/* Category book */}
+        <div className="ctg">
         <p></p>
         <h2 className="info-2">10 Books in 5 Categories</h2>
-        <button type="button" className="btn" id="seeCtg">
+        <button type="button" className="btn btn-sm" id="seeCtg">
           See All
         </button>
       </div>
