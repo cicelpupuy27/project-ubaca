@@ -6,15 +6,38 @@ import { useState, useEffect } from "react";
 import logo2 from "../../assets/logo_footer2.png";
 import ReadPage from "../../pages/ReadPage";
 import { useNavigate } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 function DetailModal({ item, onClose }) {
   let thumbnail = item.cover;
   const [bookPdf, setBookPdf] = useState();
   //console.log(item)
   const navigate = useNavigate();
-  const readPage = () => {
-    navigate(`/read-page/${item.id}`);
+  const token = localStorage.getItem("token");
+  let book_id = item.id;
+
+  const enroll = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `https://admin.u-baca.my.id/api/book/enroll-book`,
+        { book_id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setBookPdf(navigate(`/read-page/${item.id}`));
+        <ReadPage item={bookPdf} />;
+        console.log("pp", res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
+
   return (
     <div className="modalBackground1">
       <div className="modalContainer">
@@ -32,11 +55,7 @@ function DetailModal({ item, onClose }) {
           <p> {item.tahun} </p>
         </div>
         <div className="buttonRead">
-          <button
-            onClick={() => {
-              setBookPdf(readPage) && <ReadPage item={bookPdf} />;
-            }}
-          >
+          <button onClick={enroll}>
             <img src={logo2} alt="" />
           </button>
         </div>
