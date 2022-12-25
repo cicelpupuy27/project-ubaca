@@ -12,12 +12,19 @@ function Header() {
   const [bookData, setBookData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [rankData, setRankData] = useState([]);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    axios.get("https://admin.u-baca.my.id/api/book").then((res) => {
-      setBookData(res.data.data);
-      // console.log(res.data);
-    });
+    axios
+      .get(`https://admin.u-baca.my.id/api/book`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setBookData(res.data.data);
+        // console.log(res.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -29,9 +36,15 @@ function Header() {
 
   function onSearch(e) {
     e.preventDefault();
-    axios.get("https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/books?search=" + searchTerm).then((res) => {
-      setBookData(res.data);
-    });
+    axios
+      .get("https://admin.u-baca.my.id/api/book/search?key=" + searchTerm, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setBookData(res.data.data);
+      });
   }
   return (
     <div id="main">
@@ -71,7 +84,7 @@ function Header() {
           </form>
         </div>
       </div>
-      <h2 className="info"> Newly Added Books </h2>
+      <h2 className="info"> Books Collection </h2>
 
       <div className="card-container">
         <Card book={bookData} />
