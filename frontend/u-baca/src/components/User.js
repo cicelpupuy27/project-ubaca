@@ -1,43 +1,76 @@
 import React, { useEffect, useState } from "react";
-import 'antd/dist/antd.css';
-import foto from "../assets/foto-profil.png";
-import foto2 from "../assets/foto-profil-pria.png"
+import "antd/dist/antd.css";
 import coint from "../assets/coint.PNG";
 import UnlockCard from "./UnlockCard";
-import axios from 'axios';
+import axios from "axios";
+import pria from "../assets/foto-profil-pria.png";
+import wanita from "../assets/foto-profil.png";
 
 function User() {
-    const profil = JSON.parse(localStorage.getItem('profil'))
-    const [data, setData] = useState(null)
-    const [bookData, setBookData] = useState([])
+  const [profile, setProfile] = useState([]);
+  const [bookData, setBookData] = useState([]);
+  const token = localStorage.getItem("token");
 
-    
-    useEffect(() => {
-        axios.get(
-            "https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/locked-books/"
-            ).then(res => {
-                setBookData(res.data)
-            })
-    }, [])
+  function profile_picture(param) {
+    if (param.picture != null) {
+      return param.picture;
+    }
+    if (param.jenis_kelamin == "perempuan") {
+      return pria;
+    } else {
+      return wanita;
+    }
+  }
 
-    return(
-        <div id="main">
-            <h2 className="title"> My Account </h2>
-            <center><img src={profil?.jenis_kelamin?.toLowerCase() == 'perempuan'?foto:foto2} width={120} height={120} id="foto-profil" alt=""/></center>
-            <h4 className="nama">{profil?.nama}</h4>
+  useEffect(() => {
+    axios
+      .get("https://admin.u-baca.my.id/api/book/enroll-book/get-user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setBookData(res.data.data);
+      });
+  }, []);
 
-            <div id="point">
-                <center><h4 className="point-2"><img src={coint} width={35} alt=""/> {profil?.point}</h4></center>
-            </div>
+  useEffect(() => {
+    axios
+      .get(`https://admin.u-baca.my.id/api/user/get-user-profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProfile(res.data.data);
+      });
+  }, []);
 
-            <h4 className="tukar">Tukarkan Points</h4>
+  return (
+    <div id="main">
+      <h2 className="title"> My Account </h2>
+      <center>
+        <img src={profile_picture(profile)} width={120} height={120} id="foto-profil" alt="" />
+      </center>
+      <h4 className="nama">{profile?.nama}</h4>
 
-            <div className="card-container">
-                <UnlockCard book={bookData} />
-                <br /><br />
-            </div>
-        </div>
-    )
+      <div id="point">
+        <center>
+          <h4 className="point-2">
+            <img src={coint} width={35} alt="" /> {profile?.point}
+          </h4>
+        </center>
+      </div>
+
+      <h4 className="tukar">Tukarkan Points</h4>
+
+      <div className="card-container">
+        <UnlockCard book={bookData} />
+        <br />
+        <br />
+      </div>
+    </div>
+  );
 }
 
 export default User;
