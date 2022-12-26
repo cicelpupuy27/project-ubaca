@@ -29,3 +29,8 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.profile-picture{
+  max-width: 100px;
+  width: 100px;
+}
