@@ -28,11 +28,11 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    axios.get("https://62b43ed9a36f3a973d2f885e.mockapi.io/books-data/user").then((res) => {
-      setRankData(res.data);
-      // console.log(res.data);
+    axios.get("https://admin.u-baca.my.id/api/user/rank").then((res) => {
+      setRankData(res.data.data);
+      console.log(res.data.data);
     });
-  });
+  }, []);
 
   function onSearch(e) {
     e.preventDefault();
@@ -44,7 +44,7 @@ function Header() {
       })
       .then((res) => {
         setBookData(res.data.data);
-      });
+      },[]);
   }
   return (
     <div id="main">

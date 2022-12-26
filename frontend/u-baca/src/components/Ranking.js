@@ -50,12 +50,13 @@ function Ranking({ rank }) {
               <div className="">
                 <div className="position-relative d-block mb-2">
                   
-                <img src={item.avatar} alt="" />
-                  <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill  bg-secondary ">{newRank(item.id)} <span className="text-warning"> <HiStar/></span></span>
-                  <span class="position-absolute top-0 start-100 translate-middle px-2 py-1 badge rounded-pill bg-warning fs-3">{item.id==1?<ImTrophy/>:""}</span>
+                <img className="profile-picture" src={item.picture} alt="profile" />
+                  <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill  bg-secondary ">{newRank((item.rank).toString())} <span className="text-warning"> <HiStar/></span></span>
+                  <span class="position-absolute top-0 start-100 translate-middle px-2 py-1 badge rounded-pill bg-warning fs-3">{item.rank==1?<ImTrophy/>:""}</span>
                 </div>
-                  <p className="fw-bold user-name m-0">{item.name}</p>
-                  <p className="badge text-bg-danger">{item.point}</p>
+                  <p className="fw-bold user-name m-0">{item.nama}</p>
+                  <p className="badge text-bg-danger mx-1">{item.exp} exp</p>
+                  <p className="badge text-bg-warning text-white mx-1">{item.point} pts</p>
               </div>
             </div>
             {/* {openModal && <DetailModal item={rankItem} onClose={setOpenModal} />} */}
