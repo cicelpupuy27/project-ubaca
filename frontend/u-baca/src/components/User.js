@@ -10,6 +10,21 @@ function User() {
   const [profile, setProfile] = useState([]);
   const [bookData, setBookData] = useState([]);
   const token = localStorage.getItem("token");
+  const uploadedImage = React.useRef(null);
+  const imageUploader = React.useRef(null);
+
+  const handleImageUpload = (e) => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+        current.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   function profile_picture(param) {
     if (param.picture != null) {
@@ -50,7 +65,36 @@ function User() {
     <div id="main">
       <h2 className="title"> My Account </h2>
       <center>
-        <img src={profile_picture(profile)} width={120} height={120} id="foto-profil" alt="" />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          ref={imageUploader}
+          style={{
+            display: "none",
+            height: "60px",
+            width: "60px",
+          }}
+        />
+        <div
+          style={{
+            height: "120px",
+            width: "120px",
+            border: "1px dashed black",
+            borderRadius: "50%",
+          }}
+          onClick={() => imageUploader.current.click()}
+        >
+          <img
+            ref={uploadedImage}
+            style={{
+              width: "100%",
+              height: "100%",
+              borderRadius: "50%",
+            }}
+          />
+        </div>
+        Click to change avatar
       </center>
       <h4 className="nama">{profile?.nama}</h4>
 
@@ -62,7 +106,7 @@ function User() {
         </center>
       </div>
 
-      <h4 className="tukar">Tukarkan Points</h4>
+      <h4 className="tukar">My Collection</h4>
 
       <div className="card-container">
         <UnlockCard book={bookData} />
