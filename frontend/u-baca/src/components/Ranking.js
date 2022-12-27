@@ -16,9 +16,9 @@ function Ranking({ rank }) {
       return param.picture;
     }
     if (param.jenis_kelamin == "perempuan") {
-      return pria;
-    } else {
       return wanita;
+    } else {
+      return pria;
     }
   }
 

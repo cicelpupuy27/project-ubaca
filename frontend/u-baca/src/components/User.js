@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "antd/dist/antd.css";
 import coint from "../assets/coint.PNG";
 import UnlockCard from "./UnlockCard";
@@ -10,30 +10,48 @@ function User() {
   const [profile, setProfile] = useState([]);
   const [bookData, setBookData] = useState([]);
   const token = localStorage.getItem("token");
-  const uploadedImage = React.useRef(null);
-  const imageUploader = React.useRef(null);
+  const [loader, setLoader] = useState(false);
+  const [change, setChange] = useState(null);
+  let imageUploader = useRef(null);
+  let [selectedFile, setSelectedFile] = useState(null);
+  let [sendImage, setSendImage] = useState(false);
 
-  const handleImageUpload = (e) => {
-    const [file] = e.target.files;
-    if (file) {
-      const reader = new FileReader();
-      const { current } = uploadedImage;
-      current.file = file;
-      reader.onload = (e) => {
-        current.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+  let uploadFile = async(event) => {
+    event.preventDefault();
+    setLoader(true)
+    let formData = new FormData();
+    formData.append("picture", selectedFile);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "https://admin.u-baca.my.id/api/user/change-profile-picture",
+        data: formData,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert(response.data.message)
+      console.log(response.data.message)
+      setLoader(false)
+    } catch(error) {
+      setLoader(false)
+      alert(error.data.data.message)
     }
+    setSendImage(false)
+    change?setChange(false):setChange(true)
   };
+
+  function handleImageUpload(event){
+    setSelectedFile(event.target.files[0])
+    setSendImage(true)
+  }
 
   function profile_picture(param) {
     if (param.picture != null) {
       return param.picture;
     }
     if (param.jenis_kelamin == "perempuan") {
-      return pria;
-    } else {
       return wanita;
+    } else {
+      return pria;
     }
   }
 
@@ -59,16 +77,25 @@ function User() {
       .then((res) => {
         setProfile(res.data.data);
       });
-  }, []);
+  }, [change]);
 
   return (
     <div id="main">
+       {
+      loader?(
+        <div class="position-fixed bg-dark w-100 h-100 bg-opacity-25">
+            <div class="position-relative position-absolute top-50 start-50 translate-middle">
+              <div class="spinner-border text-primary"  role="status"></div>
+            </div>
+        </div>
+      ) :(<div></div>)
+      }
       <h2 className="title"> My Account </h2>
       <center>
         <input
           type="file"
           accept="image/*"
-          onChange={handleImageUpload}
+          onChange={event => handleImageUpload(event)}
           ref={imageUploader}
           style={{
             display: "none",
@@ -83,10 +110,8 @@ function User() {
             border: "1px dashed black",
             borderRadius: "50%",
           }}
-          onClick={() => imageUploader.current.click()}
         >
-          <img
-            ref={uploadedImage}
+          <img src={profile_picture(profile)}
             style={{
               width: "100%",
               height: "100%",
@@ -94,7 +119,8 @@ function User() {
             }}
           />
         </div>
-        Click to change avatar
+       <p style={{cursor:"pointer", width:"200px"}} onClick={() => imageUploader.current.click()}> Click to change avatar </p>
+       {sendImage && <button className="btn btn-primary btn-sm" onClick={event => uploadFile(event)}>Submit</button> }
       </center>
       <h4 className="nama">{profile?.nama}</h4>
 
