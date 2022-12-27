@@ -34,6 +34,7 @@ function SignUp() {
             tgl_lahir: "",
             jenis_kelamin: "",
           });
+          alert("Register Berhasil");
           navigate("/sign-in");
         })
         .catch((e) => {
@@ -115,7 +116,7 @@ function SignUp() {
                 />
                 {validation.nama && (<span class="alert alert-danger p-1">{validation.nama[0]}</span>)}
               </div>
-              <div className="mb-4">
+              <div className="mb-2">
                 <input
                   onChange={(e) => {
                     setData({ ...data, tgl_lahir: e.target.value });
@@ -127,19 +128,33 @@ function SignUp() {
                 />
                 {validation.tgl_lahir && (<span class="alert alert-danger p-1">{validation.tgl_lahir[0]}</span>)}
               </div>
-              <div className="mb-4">
+              <div className="gender jenis kelamin text-black mb-2">
+              <div className="mb-1">
                 <input
                   onChange={(e) => {
                     setData({ ...data, jenis_kelamin: e.target.value });
                   }}
-                  type="jenis kelamin"
-                  className="gender jenis kelamin text-black mb-2"
-                  placeholder="Jenis Kelamin"
-                  value={data.jenis_kelamin}
+                  id="laki"
+                  type="radio"
+                  value="laki-laki"
+                  checked={data.jenis_kelamin === "laki-laki"}
                 />
+                <label className="ms-1" for="laki"> Laki-laki </label>
+              </div>
+              <div className="mb-1">
+                <input
+                  onChange={(e) => {
+                    setData({ ...data, jenis_kelamin: e.target.value });
+                  }}
+                  type="radio"
+                  value="perempuan"
+                  id="perempuan"
+                  checked={data.jenis_kelamin === "perempuan"}
+                />
+                <label className="ms-1" for="perempuan"> Perempuan </label>
                 {validation.jenis_kelamin && (<span class="alert alert-danger p-1">{validation.jenis_kelamin[0]}</span>)}
               </div>
-
+              </div>
               <div className="d-flex justify-content-end align-items-center mb-4">
                 <h6 className="forgot-password pt-2 pe-4">
                   Sudah ada akun?{" "}
