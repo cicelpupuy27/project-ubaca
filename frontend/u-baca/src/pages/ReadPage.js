@@ -8,9 +8,11 @@ import { Button } from "react-bootstrap";
 import RatingModal from "../components/Modals/RatingModal";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 
 export default function ReadPage() {
-  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
   const [bookPdf, setBookPdf] = useState(null);
   const token = localStorage.getItem("token");
   //console.log(item)
@@ -42,10 +44,10 @@ export default function ReadPage() {
       </div>
 
       <section className="under-pdf">
-        <div className="btn" onClick={() => setOpenModal(true)}>
+        <div className="btn" onClick={() => setOpen(true)}>
           <Button style={{ color: "white", background: "#3EB489", margin: "4%", border: "none" }}>Next</Button>
         </div>
-        {openModal && <RatingModal onClose={setOpenModal} />}
+        {open && <RatingModal onClose={setOpen} />}
       </section>
     </>
   );

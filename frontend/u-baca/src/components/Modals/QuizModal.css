@@ -1,0 +1,129 @@
+.modalBackground1 {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.modalContainer1 {
+  background: white;
+  width: 400px;
+  height: 500px;
+  padding: 1.5rem;
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 10%;
+  font-size: 15px;
+  text-align: center;
+  overflow-y: auto;
+  /* overflow-y: hidden; */
+}
+
+.modalContainer1NoScroll {
+  margin: 30px;
+}
+
+/* Here we define the 'scrollable' content */
+.modalContainer1Scroll {
+  position: absolute;
+  width: auto;
+  height: calc(100% - 250px);
+  overflow-y: auto;
+  margin-right: 30px;
+  margin-bottom: 40px;
+  /* padding: 0px 20px 0px 0px; */
+}
+
+.modalContainer1Scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modalContainer1Scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px #333;
+  border-radius: 10px;
+}
+
+.modalContainer1Scroll::-webkit-scrollbar-thumb {
+  background: rgba(51, 51, 51, 0.8);
+  opacity: 0.6;
+  border-radius: 10px;
+}
+
+.modalContainer1Scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(51, 51, 51, 1);
+}
+
+.modalImage img {
+  width: 100px;
+}
+
+.buttonRead img {
+  width: 50% !important;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  outline: none;
+  border: none;
+  font-size: 17px;
+  background-color: transparent;
+}
+
+.body {
+  margin-top: 10px;
+  font-size: small;
+}
+
+.buttonRead button {
+  outline: none;
+  border: none;
+  background-color: #3eb489;
+  border-radius: 20px;
+  width: 240px;
+}
+
+.bookSynopsis {
+  margin-top: 15px;
+  font-size: small;
+}
+
+#submitQuiz {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border: none;
+  margin-left: auto;
+}
+
+.buttonUnlock button {
+  outline: none;
+  border: none;
+  background-color: #3eb489;
+  border-radius: 10px;
+  width: 240px;
+  height: 28px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: white;
+  font-weight: 600;
+  font-size: 12pt;
+}
+
+.coint {
+  color: var(--tertiary-color);
+  font-weight: 700;
+}
+
+div .soal1 {
+  display: flex;
+  align-items: flex-start !important;
+}
