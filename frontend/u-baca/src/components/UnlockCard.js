@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import UnlockModal from "./Modals/UnlockModal";
+import DetailModalE from "./Modals/DetailModalEnroll";
 
 function Unlock({ book }) {
   const [openModal, setOpenModal] = useState(false);
@@ -22,12 +22,12 @@ function Unlock({ book }) {
               <img src={item.book.cover} alt="" />
               <div className="bottom">
                 <h3 className="pt-3 book-title">{item.book.judul}</h3>
-                <button className="mt-1 btn btn-outline-warning btn-rounded btn-sm my-0" id="unlock-button" type="submit">
+                {/* <button className="mt-1 btn btn-outline-warning btn-rounded btn-sm my-0" id="unlock-button" type="submit">
                   Unlock
-                </button>
+                </button> */}
               </div>
             </div>
-            {openModal && <UnlockModal item={bookItem} onClose={setOpenModal} />}
+            {openModal && <DetailModalE item={bookItem} onClose={setOpenModal} />}
           </>
         );
       })}

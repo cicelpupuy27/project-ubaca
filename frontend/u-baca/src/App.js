@@ -1,14 +1,15 @@
-import React from 'react'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Login from './components/login-component/login.component'
-import SignUp from './components/signup-componet/signup.component'
-import Home from './pages/Home';
-import Profil from './pages/Profil';
-import ReadPage from './pages/ReadPage';
-import ReadPagePremium from './pages/ReadPagePremium'
-import NotFound from './pages/NotFound'
+import React from "react";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Login from "./components/login-component/login.component";
+import SignUp from "./components/signup-componet/signup.component";
+import Home from "./pages/Home";
+import Profil from "./pages/Profil";
+import ReadPage from "./pages/ReadPage";
+import ReadPagePremium from "./pages/ReadPagePremium";
+import NotFound from "./pages/NotFound";
+import ReadPageEnroll from "./pages/ReadPageEnroll";
 
 function App() {
   return (
@@ -18,11 +19,12 @@ function App() {
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/read-page/:id" element={<ReadPage />} />
+        <Route path="/read-pages/:id" element={<ReadPageEnroll />} />
         <Route path="/profil" element={<Profil />} />
         <Route path="/read-page-premium/:premiumid" element={<ReadPagePremium />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
-  )
+  );
 }
-export default App
+export default App;

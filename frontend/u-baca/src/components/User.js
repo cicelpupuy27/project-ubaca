@@ -16,9 +16,9 @@ function User() {
   let [selectedFile, setSelectedFile] = useState(null);
   let [sendImage, setSendImage] = useState(false);
 
-  let uploadFile = async(event) => {
+  let uploadFile = async (event) => {
     event.preventDefault();
-    setLoader(true)
+    setLoader(true);
     let formData = new FormData();
     formData.append("picture", selectedFile);
     try {
@@ -28,20 +28,20 @@ function User() {
         data: formData,
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert(response.data.message)
-      console.log(response.data.message)
-      setLoader(false)
-    } catch(error) {
-      setLoader(false)
-      alert(error.data.data.message)
+      alert(response.data.message);
+      console.log(response.data.message);
+      setLoader(false);
+    } catch (error) {
+      setLoader(false);
+      alert(error.data.data.message);
     }
-    setSendImage(false)
-    change?setChange(false):setChange(true)
+    setSendImage(false);
+    change ? setChange(false) : setChange(true);
   };
 
-  function handleImageUpload(event){
-    setSelectedFile(event.target.files[0])
-    setSendImage(true)
+  function handleImageUpload(event) {
+    setSelectedFile(event.target.files[0]);
+    setSendImage(true);
   }
 
   function profile_picture(param) {
@@ -81,21 +81,21 @@ function User() {
 
   return (
     <div id="main">
-       {
-      loader?(
+      {loader ? (
         <div class="position-fixed bg-dark w-100 h-100 bg-opacity-25">
-            <div class="position-relative position-absolute top-50 start-50 translate-middle">
-              <div class="spinner-border text-primary"  role="status"></div>
-            </div>
+          <div class="position-relative position-absolute top-50 start-50 translate-middle">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
         </div>
-      ) :(<div></div>)
-      }
+      ) : (
+        <div></div>
+      )}
       <h2 className="title"> My Account </h2>
       <center>
         <input
           type="file"
           accept="image/*"
-          onChange={event => handleImageUpload(event)}
+          onChange={(event) => handleImageUpload(event)}
           ref={imageUploader}
           style={{
             display: "none",
@@ -111,7 +111,8 @@ function User() {
             borderRadius: "50%",
           }}
         >
-          <img src={profile_picture(profile)}
+          <img
+            src={profile_picture(profile)}
             style={{
               width: "100%",
               height: "100%",
@@ -119,8 +120,15 @@ function User() {
             }}
           />
         </div>
-       <p style={{cursor:"pointer", width:"200px"}} onClick={() => imageUploader.current.click()}> Click to change avatar </p>
-       {sendImage && <button className="btn btn-primary btn-sm" onClick={event => uploadFile(event)}>Submit</button> }
+        <p style={{ cursor: "pointer", width: "200px" }} onClick={() => imageUploader.current.click()}>
+          {" "}
+          Click to change avatar{" "}
+        </p>
+        {sendImage && (
+          <button className="btn btn-primary btn-sm" onClick={(event) => uploadFile(event)}>
+            Submit
+          </button>
+        )}
       </center>
       <h4 className="nama">{profile?.nama}</h4>
 

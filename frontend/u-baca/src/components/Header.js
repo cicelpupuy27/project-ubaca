@@ -23,7 +23,7 @@ function Header() {
       })
       .then((res) => {
         setBookData(res.data.data);
-        // console.log(res.data);
+        console.log(res.data);
       });
   }, []);
 
@@ -44,7 +44,7 @@ function Header() {
       })
       .then((res) => {
         setBookData(res.data.data);
-      },[]);
+      }, []);
   }
   return (
     <div id="main">
