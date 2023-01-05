@@ -39,7 +39,7 @@ return(
         {data.map((item,index)=>
         {
             return(
-                <div className="card" key={index}>
+                <div className="card border-0" key={index}>
                     <img src={item.imgSrc} alt=""/>
                     <div className="bottom">
                     <h3 className="book-title">{item.ctgTitle}</h3>

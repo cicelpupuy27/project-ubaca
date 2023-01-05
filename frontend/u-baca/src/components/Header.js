@@ -23,14 +23,12 @@ function Header() {
       })
       .then((res) => {
         setBookData(res.data.data);
-        console.log(res.data);
       });
   }, []);
 
   useEffect(() => {
     axios.get("https://admin.u-baca.my.id/api/user/rank").then((res) => {
       setRankData(res.data.data);
-      console.log(res.data.data);
     });
   }, []);
 
@@ -50,8 +48,8 @@ function Header() {
     <div id="main">
       <div className="container pt-5">
         <div className="row d-flex mt-5 justify-content-lg-between justify-content-center">
-          <div className="col-lg-6 col-12 d-flex justify-content-center justify-content-lg-start">
-            <h1>Kasih Tulisan apa kek yang asik hehehe sama tambahin button dibawahnya</h1>
+          <div className="col-lg-6 col-12 mt-3 d-flex justify-content-center justify-content-lg-start">
+            <h1>Latih minat bacamu sekarang!</h1>
           </div>
           <div className="col-lg-6 col-12 d-flex justify-content-lg-end justify-content-center">
             <img src={landingImg} />
