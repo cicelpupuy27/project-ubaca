@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import DetailModal from "./Modals/DetailModal";
-import { BsFillShieldLockFill } from 'react-icons/bs';
-import { BsLockFill } from 'react-icons/bs';
+import { BsFillShieldLockFill } from "react-icons/bs";
+import { BsLockFill } from "react-icons/bs";
+import { BsCoin } from "react-icons/bs";
 
 //import { Modal } from 'react-bootstrap';
 
@@ -30,17 +31,30 @@ function Card({ book }) {
                 setItem(item);
               }}
               key={index}
-            >{item.is_locked=="1" && 
-              <div className="position-relative">
-                <div className="position-absolute top-50 start-50 translate-middle"><span className="badge text-bg-warning fst-italic"><BsFillShieldLockFill/> Premium</span></div>
-              </div>
-              }
-              
+            >
+              {item.is_locked == "1" && (
+                <div className="position-relative">
+                  <div className="position-absolute top-50 start-50 translate-middle">
+                    <span className="badge text-bg-warning fst-italic">
+                      <BsFillShieldLockFill /> Premium
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <img className="rounded-2" src={item.cover} alt="" />
               <div className="bottom">
                 <button className="pt-3 book-title">{item.judul}</button>
+                {item.is_locked == "1" ? (
+                  <p className="badge bg-warning text-white ">
+                    {item.point} <BsCoin className="text-white" />
+                  </p>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
+
             {openModal && <DetailModal item={bookItem} onClose={setOpenModal} />}
           </>
         );

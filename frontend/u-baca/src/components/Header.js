@@ -93,12 +93,12 @@ function Header() {
       </div>
 
       {/* Category book */}
-      <div className="ctg">
+      <div className="text-center mt-5 mb-5">
         <p></p>
-        <h2 className="info-2">10 Books in 5 Categories</h2>
-        <button type="button" className="btn btn-sm" id="seeCtg">
+        <h4 className="text-center">Our Various Books</h4>
+        {/* <button type="button" className="btn btn-sm" id="seeCtg">
           See All
-        </button>
+        </button> */}
       </div>
 
       <div className="card-container">

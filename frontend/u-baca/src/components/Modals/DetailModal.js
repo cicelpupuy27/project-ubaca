@@ -30,9 +30,13 @@ function DetailModal({ item, onClose }) {
         }
       )
       .then((res) => {
-        setBookPdf(navigate(`/read-page/${item.id}`));
-        <ReadPage item={bookPdf} />;
         console.log("pp", res);
+        if (res.data.success == true) {
+          setBookPdf(navigate(`/read-page/${item.id}`));
+          <ReadPage item={bookPdf} />;
+        } else {
+          alert(res.data.message);
+        }
       })
       .catch((e) => {
         console.log(e);

@@ -15,7 +15,7 @@
 
 .modalContainer1 {
   background: white;
-  width: 400px;
+  width: 450px;
   height: 500px;
   padding: 1.5rem;
   position: absolute;
@@ -35,7 +35,7 @@
 .modalContainer1Scroll {
   position: absolute;
   width: auto;
-  height: calc(100% - 250px);
+  height: calc(100% - 200px);
   overflow-y: auto;
   margin-right: 30px;
   margin-bottom: 40px;

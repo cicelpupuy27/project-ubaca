@@ -5,12 +5,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 function RatingModal({ onClose }) {
-  // const stars = Array(5).fill(0);
-  // const [currentValue, setCurrentValue] = React.useState(0);
-  // const [hoverValue, setHoverValue] = React.useState(undefined);
-
   const [openModal, setOpenModal] = useState(false);
   const [bookPdf, setBookPdf] = useState(null);
+  const [resp, setResp] = useState(null);
   const [data, setData] = useState({
     answer: ["", "", "", "", ""],
   });
@@ -47,56 +44,19 @@ function RatingModal({ onClose }) {
         }
       )
       .then((res) => {
-        // setBookPdf(navigate(`/read-page/${item.id}`));
-        // <ReadPage item={bookPdf} />;
         setOpenModal(true);
+        setResp(res.data);
         console.log("pp", res);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  // const profil = JSON.parse(localStorage.getItem("profil"));
-
-  // const handleClick = (value) => {
-  //   setCurrentValue(value);
-  // };
-
-  // const handleMouseOver = (value) => {
-  //   setHoverValue(value);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setHoverValue(undefined);
-  // };
-
-  // const submitReview = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .get(`https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/users/${profil?.id}`)
-  //     .then((res) => {
-  //       console.log(res);
-  //       const resData = res.data;
-  //       axios
-  //         .put(`https://62b638f842c6473c4b40ff48.mockapi.io/api/read-me/users/${profil?.id}`, {
-  //           ...resData,
-  //           point: resData.point + 10,
-  //         })
-  //         .then((resUpdate) => {
-  //           setOpenModal(true);
-  //           localStorage.setItem("profil", JSON.stringify(resUpdate.data));
-  //         })
-  //         .catch((eUpdate) => {
-  //           console.log(eUpdate);
-  //         });
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
 
   return (
     <div className="modalBackground1">
+      {" "}
+      {openModal && <PointModal resp={resp} onClose={setOpenModal} />}
       <div className="modalContainer1">
         <button onClick={() => onClose(false)} className="close">
           {" "}
@@ -104,23 +64,15 @@ function RatingModal({ onClose }) {
         </button>
 
         <div class="modalContainer1NoScroll">
-          {/* <div className="modalImage">
-            <img src={bookPdf?.cover} alt="" />
-          </div> */}
-
-          <div className="body">
-            <h6> {bookPdf?.judul} </h6>
-            <p> {bookPdf?.penulis} </p>
-          </div>
-
           <div>
             <p>
               <strong>Quiz Time</strong>
             </p>
+            <p>Jawablah semua pertanyaan di bawah ini agar mendapat point</p>
           </div>
         </div>
 
-        <div class="modalContainer1Scroll ps-3">
+        <form class="modalContainer1Scroll ps-4">
           {bookPdf?.quiz?.map((item, index) => (
             <div className="overflow-wrap break-word text-start ">
               <p className="d-block" key={index}>
@@ -140,6 +92,7 @@ function RatingModal({ onClose }) {
                       type="radio"
                       value={String.fromCharCode(indexs + 1 + 64)}
                       checked={data.answer[index] === String.fromCharCode(indexs + 1 + 64)}
+                      required
                     />
                     <label className="ms-1" for={`${index + 1}${String.fromCharCode(indexs + 1 + 64)}`}>
                       {String.fromCharCode(indexs + 1 + 64)}. {items.answer}
@@ -147,51 +100,17 @@ function RatingModal({ onClose }) {
                   </div>
                 ))}
               </div>
+              <br></br>
             </div>
           ))}
 
           <button className="btn btn-outline-warning btn-rounded btn-sm my-0 " id="submitQuiz" type="submit" onClick={submitQuiz}>
-            Submit Jawaban {openModal && <PointModal onClose={setOpenModal} />}
+            Submit Jawaban
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
 }
-
-// export default RatingModal;
-
-// const RatingModal = ({ onClose }) => {
-//   const [open, setOpen] = React.useState(false);
-
-//   const lorem = (
-//     <p>
-//       Mauris ac arcu sit amet dui interdum bibendum a sed diam. Praesent rhoncus congue ipsum elementum lobortis. Ut ligula purus, ultrices id condimentum quis, tincidunt quis purus. Proin quis enim metus. Nunc feugiat odio at eros porta,
-//       ut rhoncus lorem tristique. Nunc et ipsum eu ex vulputate consectetur vel eu nisi. Donec ultricies rutrum lectus, sit ame feugiat est semper vitae. Proin varius imperdiet consequat. Proin eu metus nisi. In hac habitasse platea
-//       dictumst. Vestibulum ac ultrices risus. Pellentesque arcu sapien, aliquet sed orci sit amet, pulvinar interdum velit. Nunc a rhoncus ipsum, maximus fermentum dolor. Praesent aliquet justo vitae rutrum volutpat. Ut quis pulvinar est.
-//     </p>
-//   );
-
-//   return (
-//     <>
-//       <button className="button" onClick={() => setOpen(true)}>
-//         Next
-//       </button>
-
-//       <Modal open={open} onClose={() => setOpen(false)}>
-//         <h2>Big modal</h2>
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//         {lorem}
-//       </Modal>
-//     </>
-//   );
-// };
 
 export default RatingModal;
