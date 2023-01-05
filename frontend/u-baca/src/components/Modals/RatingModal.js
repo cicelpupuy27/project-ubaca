@@ -8,10 +8,17 @@ function RatingModal({ onClose }) {
   // const stars = Array(5).fill(0);
   // const [currentValue, setCurrentValue] = React.useState(0);
   // const [hoverValue, setHoverValue] = React.useState(undefined);
+
   const [openModal, setOpenModal] = useState(false);
   const [bookPdf, setBookPdf] = useState(null);
+  const [data, setData] = useState({
+    answer: ["", "", "", "", ""],
+  });
+  const answer = data.answer;
+  console.log(data);
   const token = localStorage.getItem("token");
   let { id } = useParams();
+  const book_id = id;
   useEffect(() => {
     axios
       .get("https://admin.u-baca.my.id/api/book/show?id=" + id, {
@@ -27,6 +34,28 @@ function RatingModal({ onClose }) {
       });
   }, [id]);
 
+  const submitQuiz = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `https://admin.u-baca.my.id/api/book/check-answer`,
+        { book_id, answer },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        // setBookPdf(navigate(`/read-page/${item.id}`));
+        // <ReadPage item={bookPdf} />;
+        setOpenModal(true);
+        console.log("pp", res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   // const profil = JSON.parse(localStorage.getItem("profil"));
 
   // const handleClick = (value) => {
@@ -84,25 +113,6 @@ function RatingModal({ onClose }) {
             <p> {bookPdf?.penulis} </p>
           </div>
 
-          {/* <div style={styles.stars}>
-                    {stars.map((_, index) => {
-                        return(
-                            <FaStar
-                                key={index}
-                                size={25}
-                                style={{
-                                    marginRight: 10,
-                                    cursor: "pointer"
-                                }}
-                                color={(hoverValue || currentValue) > index ? colors.orange : colors.grey}
-                                onClick={() => handleClick(index + 1)}
-                                onMouseOver={() => handleMouseOver(index + 1)}
-                                onMouseLeave={handleMouseLeave}
-                            />
-                        )
-                    })}
-                </div> */}
-
           <div>
             <p>
               <strong>Quiz Time</strong>
@@ -110,48 +120,40 @@ function RatingModal({ onClose }) {
           </div>
         </div>
 
-        <div class="modalContainer1Scroll">
-          <div className="soal1">
-            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit? <br></br>
-            a. lorem ipsum <br></br>
-            b. lorem ipsum <br></br>
-            c. lorem ipsum <br></br>
-          </div>
-          <br></br>
-          <div>
-            2. Lorem ipsum dolor sit amet, consectetur adipiscing elit? <br></br>
-            a. lorem ipsum <br></br>
-            b. lorem ipsum <br></br>
-            c. lorem ipsum <br></br>
-          </div>
-          <br></br>
-          <div className="soal1">
-            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit? <br></br>
-            a. lorem ipsum <br></br>
-            b. lorem ipsum <br></br>
-            c. lorem ipsum <br></br>
-          </div>
-          <br></br>
-          <div className="soal1">
-            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit? <br></br>
-            a. lorem ipsum <br></br>
-            b. lorem ipsum <br></br>
-            c. lorem ipsum <br></br>
-          </div>
-          <br></br>
-          <div className="soal1">
-            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit? <br></br>
-            a. lorem ipsum <br></br>
-            b. lorem ipsum <br></br>
-            c. lorem ipsum <br></br>
-          </div>
-          <br></br>
-          <button className="btn btn-outline-warning btn-rounded btn-sm my-0 " id="submitQuiz" type="submit">
-            Submit Jawaban
+        <div class="modalContainer1Scroll ps-3">
+          {bookPdf?.quiz?.map((item, index) => (
+            <div className="overflow-wrap break-word text-start ">
+              <p className="d-block" key={index}>
+                {index + 1}. {item.question}
+              </p>
+
+              <div className="ps-4">
+                {item.answer?.map((items, indexs) => (
+                  <div>
+                    <input
+                      onChange={(e) => {
+                        let temp = data.answer;
+                        temp[index] = e.target.value;
+                        setData({ ...data, answer: temp });
+                      }}
+                      id={`${index + 1}${String.fromCharCode(indexs + 1 + 64)}`}
+                      type="radio"
+                      value={String.fromCharCode(indexs + 1 + 64)}
+                      checked={data.answer[index] === String.fromCharCode(indexs + 1 + 64)}
+                    />
+                    <label className="ms-1" for={`${index + 1}${String.fromCharCode(indexs + 1 + 64)}`}>
+                      {String.fromCharCode(indexs + 1 + 64)}. {items.answer}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <button className="btn btn-outline-warning btn-rounded btn-sm my-0 " id="submitQuiz" type="submit" onClick={submitQuiz}>
+            Submit Jawaban {openModal && <PointModal onClose={setOpenModal} />}
           </button>
         </div>
-
-        {openModal && <PointModal onClose={setOpenModal} />}
       </div>
     </div>
   );
