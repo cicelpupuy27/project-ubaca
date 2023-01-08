@@ -11,6 +11,7 @@ function Navbar() {
   const token = localStorage.getItem('token')
   const logout = (e) => {
     e.preventDefault();
+    localStorage.clear();
      axios
       .post(`https://admin.u-baca.my.id/api/auth/logout`,{},{
         headers: {
@@ -20,7 +21,7 @@ function Navbar() {
         },
       })
       .then((res) => {
-        localStorage.clear();
+        
         window.location.href = "/";
       })
       .catch((e) => {
